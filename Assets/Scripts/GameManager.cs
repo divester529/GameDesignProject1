@@ -16,7 +16,7 @@ public class GameManager : Singleton<GameManager>
     public Room[,] rooms;
     public int mapSizeX, mapSizeY;
     public List<Vector2> takenPositions = new List<Vector2>();
-    public int floorNumber = 1;
+    public int floorNumber = 4;
 
     // Handle to the player
     private GameObject player;
@@ -37,7 +37,15 @@ public class GameManager : Singleton<GameManager>
         //floor 1: map width and height of 7 rooms
         //floor 4: map width and height of 13 rooms
         mapSizeX = roomSizeX * (5 + floorNumber * 2);
+        mapSizeY = roomSizeY * (5 + floorNumber * 2);
         tiles = new int[mapSizeX, mapSizeY];
+        for (int a = 0; a < mapSizeX; a++)
+        {
+            for (int b = 0; b < mapSizeY; b++)
+            {
+                tiles[a, b] = -1;
+            }
+        }
         tileTypes = new TileType[2];
 
         //player = Resources.Load<GameObject>("player");
