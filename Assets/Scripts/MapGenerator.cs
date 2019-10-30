@@ -51,7 +51,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    /*void GenerateFloorLayout()
+    void GenerateFloorLayout()
     {
         //first floor should have 5-10 rooms, last floor should have 20-25
         int numRooms = gameManager.floorNumber * 5 + Random.Range(0, 5);
@@ -118,7 +118,7 @@ public class MapGenerator : MonoBehaviour
         }
 
     }
-    */
+    
 
     public void GenerateMapVisual()
     {
@@ -144,11 +144,11 @@ public class MapGenerator : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-
-    /*public void InstantiatePlayer()
+    /*
+    public void InstantiatePlayer()
     {
         Vector3 position = new Vector3(0, 0, -.75f);
         gameManager.player = Instantiate(gameManager.player, position, Quaternion.identity) as GameObject;
-    }
-    */
+    }*/
+    
 }
