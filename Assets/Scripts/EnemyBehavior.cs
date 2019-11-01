@@ -22,7 +22,9 @@ public class EnemyBehavior : MonoBehaviour
     private Transform transform;
     private Rigidbody2D rb;
 
-    private bool touchingPlayer=false; 
+    private bool touchingPlayer=false;
+    public bool isAlive = true;
+
     private float attackTimer=0; // Time until next attack
 
     void Start()
@@ -38,6 +40,13 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // Function to be called when curHealth = 0
+    void onDeath()
+    {
+        isAlive = false;
+        Destroy(gameObject);
     }
 
     // Check to see if the unit made contact with the player
@@ -92,30 +101,38 @@ public class EnemyBehavior : MonoBehaviour
 
         float dx=0, dy=0;
 
-        attackPlayer();
-
-        // If the magnitude of the distance is within the enemies chase radius, move towards the player
-        if(distToPlayer.magnitude<=chaseDistance)
+        if (isAlive)
         {
-            if(playerPos.x>transform.position.x)
+            attackPlayer();
+
+            if(currHealth==0)
             {
-                dx = 1;
-            }
-            if (playerPos.x < transform.position.x)
-            {
-                dx = -1;
-            }
-            if (playerPos.y > transform.position.y)
-            {
-                dy = 1;
-            }
-            if (playerPos.y < transform.position.y)
-            {
-                dy = -1;
+                onDeath();
             }
 
-            movement = new Vector2(dx, dy);
-            rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+            // If the magnitude of the distance is within the enemies chase radius, move towards the player
+            if (distToPlayer.magnitude <= chaseDistance)
+            {
+                if (playerPos.x > transform.position.x)
+                {
+                    dx = 1;
+                }
+                if (playerPos.x < transform.position.x)
+                {
+                    dx = -1;
+                }
+                if (playerPos.y > transform.position.y)
+                {
+                    dy = 1;
+                }
+                if (playerPos.y < transform.position.y)
+                {
+                    dy = -1;
+                }
+
+                movement = new Vector2(dx, dy);
+                rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 }

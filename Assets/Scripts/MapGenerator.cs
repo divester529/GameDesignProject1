@@ -7,7 +7,8 @@ using System;
 
 public class MapGenerator : MonoBehaviour
 {
-  private GameManager gameManager;
+    private GameManager gameManager;
+    public GameObject player;
 
     private void Start()
     {
@@ -153,6 +154,7 @@ public class MapGenerator : MonoBehaviour
             roomName = "";
         }
 
+        player.GetComponent<Transform>().position = new Vector3(roomCoords[0].x+gameManager.roomSizeX/2, roomCoords[0].y+gameManager.roomSizeY/2, -1);
     }
     
 
