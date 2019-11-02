@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.IO;
+using System;
 
 public class MapGenerator : MonoBehaviour
 {
-  private GameManager gameManager;
+    private GameManager gameManager;
+    public GameObject player;
 
     private void Start()
     {
       gameManager=GameManager.Instance;
 
-        //GenerateFloorLayout();
-        GetRoomTiles("TLRB");
+        GenerateFloorLayout();
         GenerateMapVisual();
         //InstantiatePlayer();
 
     }
-    public void GetRoomTiles(string name)
+    public void GetRoomTiles(string name, int x, int y)
     {
-
-        gameManager.tiles = new int[gameManager.roomSizeX, gameManager.roomSizeY];
-
+        //if (name == "") return;
+        
         StreamReader reader = new StreamReader(File.OpenRead(@"Assets\Rooms\" + name + ".csv"));
         int count = 0;
         List<string> list = new List<string>();
@@ -44,37 +44,44 @@ public class MapGenerator : MonoBehaviour
 
             for(int j = 0; j < gameManager.roomSizeX; j++)
             {
-                gameManager.tiles[j, count] = System.Int32.Parse(l[j]);
+                gameManager.tiles[x+j, y+gameManager.roomSizeY - count] = System.Int32.Parse(l[j]);
             }
             count++;
             list.Clear();
         }
+        //and it's upside down, here's a lazy fix
+
     }
 
     void GenerateFloorLayout()
     {
+        //gameManager.tiles = new int[gameManager.mapSizeX, gameManager.mapSizeY];
+
         //first floor should have 5-10 rooms, last floor should have 20-25
-        int numRooms = gameManager.floorNumber * 5 + Random.Range(0, 5);
+        int numRooms = gameManager.floorNumber * 5 + UnityEngine.Random.Range(0, 5);
         int mapWidth = gameManager.mapSizeX / gameManager.roomSizeX;
         int mapHeight = gameManager.mapSizeY / gameManager.roomSizeY;
         int[,] roomMap = new int[mapWidth, mapHeight];
-        List<Vector2> roomCoords = new List<Vector2>();
 
+
+        List<Vector2> roomCoords = new List<Vector2>();
+        numRooms--;
         //starting position
         roomMap[mapWidth / 2, mapHeight / 2] = 1;
-        roomCoords.Add(new Vector2(mapWidth / 2, mapHeight / 2));
+        roomCoords.Add(new Vector2((mapWidth/2) * gameManager.roomSizeX, (mapHeight/2) * gameManager.roomSizeY));
 
-        //now, choose rooms at random, check if they have any open neighbors, and check if those neighbors have only 1 neighbor
+
+        //now, choose rooms at random, check if they have any open neighbors, and check if those neighbors don't have too many neighbors
         while(numRooms > 0)
         {
-            int roomSelection = Random.Range(0, roomCoords.Count());
+            int roomSelection = UnityEngine.Random.Range(0, roomCoords.Count());
             Vector2 selectionCoords = roomCoords.ElementAt(roomSelection);
-            int x = (int)selectionCoords.x;
-            int y = (int)selectionCoords.y;
+            int x = (int)(selectionCoords.x / gameManager.roomSizeX);
+            int y = (int)(selectionCoords.y / gameManager.roomSizeY);
             int numNeighbors = 0;
 
             //first level of neighbors
-            int connectionSelection = Random.Range(0, 3);
+            int connectionSelection = UnityEngine.Random.Range(0, 3);
             switch (connectionSelection)
             {
                 case 0:
@@ -97,36 +104,67 @@ public class MapGenerator : MonoBehaviour
                 default:
                     break;
             }
-            //first check that this isn't taken
-            if (roomMap[x, y] == 1) continue;
+            //first check that this isn't taken or outside the range
+            if (x >= mapHeight || x <= -1 || y >= mapWidth || y <= 0 || roomMap[x, y] == 1) continue;
 
-            //otherwise check that it doesn't have too many neighbors
-            if (roomMap[x + 1, y] == 1) numNeighbors++;
-            if (roomMap[x, y + 1] == 1) numNeighbors++;
-            if (roomMap[x - 1, y] == 1) numNeighbors++;
-            if (roomMap[x, y - 1] == 1) numNeighbors++;
+            //otherwise check that it doesn't have too many neighbors/map boundaries
+            if (x == mapHeight-1 || roomMap[x + 1, y] == 1) numNeighbors++;
+            if (y == mapWidth-1 || roomMap[x, y + 1] == 1) numNeighbors++;
+            if (x == 0 || roomMap[x - 1, y] == 1) numNeighbors++;
+            if (y == 0 || roomMap[x, y - 1] == 1) numNeighbors++;
 
-            //i want to exit here on failure just to keep it random
-            if (numNeighbors > 2) continue;
-            else
+            
+            if (numNeighbors < 2)
             {
                 roomMap[x, y] = 1;
                 numRooms--;
-                roomCoords.Add(new Vector2(x, y));
+                roomCoords.Add(new Vector2(x * gameManager.roomSizeX, y * gameManager.roomSizeY));
             }
 
         }
 
+        
+        //at this point, we've filled the array with rooms. Now we want to figure out what types of rooms they are
+        string roomName = "";
+
+        //so, check which sides have connections for each room
+        foreach (Vector2 coord in roomCoords)
+        {
+            
+            //have to check first to avoid index out of range exceptions
+            //y+1 for top
+            if (coord.y + gameManager.roomSizeY <= gameManager.mapSizeY)
+                if (roomMap[(int)(coord.x) / gameManager.roomSizeX, (int)(coord.y + gameManager.roomSizeY) / gameManager.roomSizeY] == 1) roomName = roomName + "T";
+
+            //x-1 for left
+            if (coord.x - gameManager.roomSizeX >= 0)
+                if (roomMap[(int)(coord.x - gameManager.roomSizeX) / gameManager.roomSizeX, (int)(coord.y) / gameManager.roomSizeY] == 1) roomName = roomName + "L";
+
+            //x+1 for right
+            if (coord.x + gameManager.roomSizeX <= gameManager.mapSizeX)
+                if (roomMap[(int)(coord.x + gameManager.roomSizeX) / gameManager.roomSizeX, (int)(coord.y) / gameManager.roomSizeY] == 1) roomName = roomName + "R";
+
+            //y-1 for bottom
+            if (coord.y - gameManager.roomSizeY >= 0)
+                if (roomMap[(int)(coord.x) / gameManager.roomSizeX, (int)(coord.y - gameManager.roomSizeY) / gameManager.roomSizeY] == 1) roomName = roomName + "B";
+
+           
+            //now we have the connections, so we set up rooms at these coordinates
+            GetRoomTiles(roomName,(int)coord.x, (int)coord.y);
+            roomName = "";
+        }
+
+        player.GetComponent<Transform>().position = new Vector3(roomCoords[0].x+gameManager.roomSizeX/2, roomCoords[0].y+gameManager.roomSizeY/2, -1);
     }
     
 
     public void GenerateMapVisual()
     {
-      for (int x = 0; x < gameManager.roomSizeX; x++)
+      for (int x = 0; x < gameManager.mapSizeX; x++)
       {
-          for (int y = 0; y < gameManager.roomSizeX; y++)
+          for (int y = 0; y < gameManager.mapSizeY; y++)
           {
-
+                if (gameManager.tiles[x, y] == -1) continue;
               TileType tt = gameManager.tileTypes[gameManager.tiles[x,y]];
               GameObject go = (GameObject)Instantiate(tt.tileVisualPrefab, new Vector3(x, y, 0), Quaternion.identity);
 
