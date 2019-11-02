@@ -7,6 +7,15 @@ public class Inventory : MonoBehaviour
     [SerializeField] List<Item> items;
     [SerializeField] Transform itemsParent;
     [SerializeField] ItemSlot[] itemSlots;
+    GameManager gm;
+    [SerializeField] EquipableItem item;
+    [SerializeField] GameObject player;
+
+    void Start() {
+      //gm = GameManager.Instance;
+      AddItem(item);
+      RemoveItem(item);
+    }
 
     private void OnValidate() {
       if (itemsParent != null) {
@@ -25,19 +34,22 @@ public class Inventory : MonoBehaviour
       }
     }
 
-    public bool AddItem(Item item) {
+    public bool AddItem(EquipableItem item) {
       Debug.Log("Help me");
       if (IsFull()) {
         return false;
       }
-
+      player.GetComponent<Player>().strength += item.StrengthBonus;
       items.Add(item);
       RefreshUI();
       return true;
     }
 
-    public bool RemoveItem(Item item) {
+    public bool RemoveItem(EquipableItem item) {
       if (items.Remove(item)) {
+        player.GetComponent<Player>().strength -= item.StrengthBonus;
+        items.Remove(item);
+        RefreshUI();
         return true;
       }
       return false;

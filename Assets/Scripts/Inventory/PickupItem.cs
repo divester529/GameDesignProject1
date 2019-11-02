@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickupItem : MonoBehaviour {
 
   [SerializeField] Inventory inventory;
-  [SerializeField] Item Weapon;
+  [SerializeField] EquipableItem Weapon;
 
   void OnTriggerEnter2D(Collider2D other) {
     inventory.AddItem(Weapon);

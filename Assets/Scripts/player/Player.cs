@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
   public int health;
   public int maxHealth;
 
+  public int strength;
+
   public int getHealth()
   {
     return health;
