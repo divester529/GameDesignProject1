@@ -146,6 +146,7 @@ MonoBehaviour:
   maxHealth: 100
   currHealth: 100
   damage: 10
-  attackSpeed: 100
+  attackSpeed: 3
   movementSpeed: 1
-  chaseDistance: 10
+  chaseDistance: 100
+  isAlive: 1

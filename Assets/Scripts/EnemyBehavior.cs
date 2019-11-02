@@ -14,7 +14,7 @@ public class EnemyBehavior : MonoBehaviour
 
     public int damage=10;
 
-    public float attackSpeed=5000;
+    public float attackSpeed=1;
     public float movementSpeed=1;
     // This will be the maximum distance the enemy will chase the player from.
     public float chaseDistance=100;
@@ -57,7 +57,7 @@ public class EnemyBehavior : MonoBehaviour
         // If the other object is the player, we are now touching the player
         if(string.Equals(other.transform.name, "Player"))
         {
-            Debug.Log("We are touching the batman");
+            
             touchingPlayer = true;
         }
     }
@@ -78,8 +78,9 @@ public class EnemyBehavior : MonoBehaviour
         if(touchingPlayer)
         {
             // If we're ready to attack, "attack" the player (subtract hitpoints = to damage)
-            if (attackTimer == 0)
+            if (attackTimer <= 0)
             {
+                Debug.Log("We are touching the batman");
                 gameManager.getPlayer().GetComponent<Player>().health -= damage;
                 attackTimer = attackSpeed;
             }
@@ -89,6 +90,15 @@ public class EnemyBehavior : MonoBehaviour
                 attackTimer -= Time.fixedDeltaTime;
             }
           
+        }
+    }
+    
+    void attackedByPlayer()
+    {
+        if (touchingPlayer)
+        {
+            currHealth -= gameManager.getPlayer().GetComponent<Player>().damage;
+            Debug.Log(currHealth);
         }
     }
 
@@ -101,9 +111,14 @@ public class EnemyBehavior : MonoBehaviour
 
         float dx=0, dy=0;
 
+        Player player = gameManager.getPlayer().GetComponent<Player>();
+
         if (isAlive)
         {
-            attackPlayer();
+            if (player.isAttacking&&player.cooldown<=0)
+                attackedByPlayer();
+            else
+                attackPlayer();
 
             if(currHealth==0)
             {
