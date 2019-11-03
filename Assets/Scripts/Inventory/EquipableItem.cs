@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EquipmentType {
-  Weapon
+  Weapon,
+  Consumable
 }
 
 [CreateAssetMenu]
 public class EquipableItem : Item
 {
+  private EquipableType Type;
   public int StrengthBonus;
   public int AgilityBonus;
   [Space]

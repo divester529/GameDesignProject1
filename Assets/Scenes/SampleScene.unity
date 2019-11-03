@@ -331,6 +331,8 @@ MonoBehaviour:
   itemSlots:
   - {fileID: 855309266}
   - {fileID: 820890078}
+  item: {fileID: 11400000, guid: b1104f80601b1344a93e9140c2169d21, type: 2}
+  player: {fileID: 1811599655}
 --- !u!1 &152998446
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,7 +35,6 @@ public class Inventory : MonoBehaviour
     }
 
     public bool AddItem(EquipableItem item) {
-      Debug.Log("Help me");
       if (IsFull()) {
         return false;
       }
