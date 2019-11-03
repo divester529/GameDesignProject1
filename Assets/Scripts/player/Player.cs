@@ -21,6 +21,9 @@ private GameManager gameManager;
 
     public Vector2 colSize; // This is for some hacky ass code to make knockback
 
+    // Game over screen
+    [SerializeField] GameObject gameOver;
+
     public int getHealth()
     {
         return health;
@@ -34,6 +37,19 @@ private GameManager gameManager;
     protected Player()
     {
         health=maxHealth=100;
+    }
+
+    void onDeath()
+    {
+        gameOver.SetActive(true);
+    }
+
+    public void reset()
+    {
+        health = maxHealth = 100;
+        damage = 10;
+        swingTime = 1; // Time (in seconds) between each attack
+        knockback = 0.75f;
     }
 
     void Start()
