@@ -7,14 +7,14 @@ public class Inventory : MonoBehaviour
     [SerializeField] List<Item> items;
     [SerializeField] Transform itemsParent;
     [SerializeField] ItemSlot[] itemSlots;
-    GameManager gm;
-    [SerializeField] EquipableItem item;
     [SerializeField] GameObject player;
+    [SerializeField] int maxItemsSize;
 
     void Start() {
-      //gm = GameManager.Instance;
-      AddItem(item);
-      RemoveItem(item);
+      int i = 0;
+      for(; i < maxItemsSize; i++) {
+        items.Add(null);
+      }
     }
 
     private void OnValidate() {
@@ -35,11 +35,23 @@ public class Inventory : MonoBehaviour
     }
 
     public bool AddItem(EquipableItem item) {
-      if (IsFull()) {
+      if (items[0] != null) {
         return false;
       }
       player.GetComponent<Player>().strength += item.StrengthBonus;
-      items.Add(item);
+      items.RemoveAt(0);
+      items.Insert(0, item);
+      RefreshUI();
+      return true;
+    }
+
+    public bool AddItem(ConsumableItem item) {
+      if (items[1] != null) {
+        return false;
+      }
+      player.GetComponent<Player>().health += item.HealthBonus;
+      items.RemoveAt(1);
+      items.Insert(1, item);
       RefreshUI();
       return true;
     }

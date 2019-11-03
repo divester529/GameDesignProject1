@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2645579729505546994ea451171aa1d, type: 3}
-  m_Name: New Equipable Item
+  m_Script: {fileID: 11500000, guid: bbc3f8a0abd8d5f479767cce60632718, type: 3}
+  m_Name: New Consumable Item
   m_EditorClassIdentifier: 
   ItemName: 
   Icon: {fileID: 0}
-  StrengthBonus: 0
-  AgilityBonus: 0
-  StrengthPercentBonus: 0
-  AgilityPercentBonus: 0
-  EquipmentType: 0
+  HealthBonus: 0
