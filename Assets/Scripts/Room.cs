@@ -5,7 +5,6 @@ using UnityEngine;
 public class Room
 {
     public Vector2 gridPos;
-    
     public bool t, l, r, b;
 
     public Room(Vector2 centerPos, string name)

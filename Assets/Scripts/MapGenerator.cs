@@ -7,7 +7,9 @@ using System;
 
 public class MapGenerator : MonoBehaviour
 {
-  private GameManager gameManager;
+    private GameManager gameManager;
+    public GameObject player;
+
 
     private void Start()
     {
@@ -17,6 +19,82 @@ public class MapGenerator : MonoBehaviour
         GenerateMapVisual();
         //InstantiatePlayer();
 
+    }
+
+    private void Update()
+    {
+
+        checkDoors();
+    }
+    //this should be called after gameManager.enemiesAlive is changed, which is after an enemy death or enemy spawn
+    public void checkDoors()
+    {
+        GameObject[] topdoors, leftdoors, rightdoors, bottomdoors;
+        Vector2 doorCoords;
+        if (gameManager.enemiesAlive)
+        {
+            //find all open doors, destroy them, and replace them with closed doors
+            topdoors = GameObject.FindGameObjectsWithTag("doorTopOpen");
+            foreach (GameObject topdoor in topdoors)
+            {
+                doorCoords = topdoor.transform.position;
+                Destroy(topdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[2].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+            leftdoors = GameObject.FindGameObjectsWithTag("doorLeftOpen");
+            foreach (GameObject leftdoor in leftdoors)
+            {
+                doorCoords = leftdoor.transform.position;
+                Destroy(leftdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[4].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+            rightdoors = GameObject.FindGameObjectsWithTag("doorRightOpen");
+            foreach (GameObject rightdoor in rightdoors)
+            {
+                doorCoords = rightdoor.transform.position;
+                Destroy(rightdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[6].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+            bottomdoors = GameObject.FindGameObjectsWithTag("doorBottomOpen");
+            foreach (GameObject bottomdoor in bottomdoors)
+            {
+                doorCoords = bottomdoor.transform.position;
+                Destroy(bottomdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[8].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+        }
+        else
+        {
+            //find all closed doors, destroy them, and replace them with open doors
+            topdoors = GameObject.FindGameObjectsWithTag("doorTopClosed");
+            foreach (GameObject topdoor in topdoors)
+            {
+                doorCoords = topdoor.transform.position;
+                Destroy(topdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[3].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+            leftdoors = GameObject.FindGameObjectsWithTag("doorLeftClosed");
+            foreach (GameObject leftdoor in leftdoors)
+            {
+                doorCoords = leftdoor.transform.position;
+                Destroy(leftdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[5].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+            rightdoors = GameObject.FindGameObjectsWithTag("doorRightClosed");
+            foreach (GameObject rightdoor in rightdoors)
+            {
+                doorCoords = rightdoor.transform.position;
+                Destroy(rightdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[7].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+            bottomdoors = GameObject.FindGameObjectsWithTag("doorBottomClosed");
+            foreach (GameObject bottomdoor in bottomdoors)
+            {
+                doorCoords = bottomdoor.transform.position;
+                Destroy(bottomdoor);
+                GameObject door = (GameObject)Instantiate(gameManager.tileTypes[9].tileVisualPrefab, doorCoords, Quaternion.identity);
+            }
+        }
     }
     public void GetRoomTiles(string name, int x, int y)
     {
@@ -48,7 +126,7 @@ public class MapGenerator : MonoBehaviour
             count++;
             list.Clear();
         }
-        //and it's upside down, here's a lazy fix
+       
 
     }
 
@@ -153,6 +231,7 @@ public class MapGenerator : MonoBehaviour
             roomName = "";
         }
 
+        player.GetComponent<Transform>().position = new Vector3(roomCoords[0].x+gameManager.roomSizeX/2, roomCoords[0].y+gameManager.roomSizeY/2, -1);
     }
     
 
@@ -180,11 +259,11 @@ public class MapGenerator : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-
-    /*public void InstantiatePlayer()
+    /*
+    public void InstantiatePlayer()
     {
         Vector3 position = new Vector3(0, 0, -.75f);
         gameManager.player = Instantiate(gameManager.player, position, Quaternion.identity) as GameObject;
-    }
-    */
+    }*/
+    
 }
