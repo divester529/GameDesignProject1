@@ -41,21 +41,12 @@ public class Inventory : MonoBehaviour
       }
     }
 
-<<<<<<< HEAD
     public void AddItem(EquipableItem item) {
-      if (items[0] != null) {
-        RemoveItem(currentWeapon);
-        SpawnItem(currentWeapon.index);
-=======
-    public bool AddItem(Item item) {
-<<<<<<< HEAD
-      Debug.Log("Help me");
-=======
->>>>>>> b574683651de11d3b0df8ffa3b349009f08cc643
-      if (IsFull()) {
-        return false;
->>>>>>> enemy
-      }
+        if (items[0] != null)
+        {
+            RemoveItem(currentWeapon);
+            SpawnItem(currentWeapon.index);
+        }
       currentWeapon = item;
       player.GetComponent<Player>().strength += item.StrengthBonus;
       player.GetComponent<PlayerMovement>().movementSpeed += item.AgilityBonus;
