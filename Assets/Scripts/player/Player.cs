@@ -4,38 +4,98 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-  private GameManager gameManager;
+private GameManager gameManager;
 
-  // Health
-  public int health;
-  public int maxHealth;
+    // Health
+    public int health;
+    public int maxHealth;
 
-  public int strength;
+    public int strength;
 
-  public int getHealth()
-  {
-    return health;
-  }
+    // Combat stats
+    public int damage=10;
+    public float swingTime=1; // Time (in seconds) between each attack
+    public float knockback = 0.75f;
 
-  public int getMaxHealth()
-  {
-    return maxHealth;
-  }
+    public bool isAttacking;
 
-  protected Player()
-  {
-    health=maxHealth=100;
-  }
+    public float cooldown; // Swing cooldown
 
-  void Start()
-  {
-      gameManager=GameManager.Instance;
+    public Vector2 colSize; // This is for some hacky ass code to make knockback
 
-  }
+    // Game over screen
+    [SerializeField] GameObject gameOver;
 
-  // Update is called once per frame
-  void Update()
-  {
+    public int getHealth()
+    {
+        return health;
+    }
 
-  }
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    protected Player()
+    {
+        health=maxHealth=100;
+    }
+
+    void onDeath()
+    {
+        gameOver.SetActive(true);
+    }
+
+    public void reset()
+    {
+        health = maxHealth = 100;
+        damage = 10;
+        swingTime = 1; // Time (in seconds) between each attack
+        knockback = 0.75f;
+    }
+
+    void Start()
+    {
+        gameManager=GameManager.Instance;
+        colSize = new Vector2(gameObject.GetComponent<BoxCollider2D>().size.x, gameObject.GetComponent<BoxCollider2D>().size.y);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isAttacking = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isAttacking = false;
+        }
+
+    }
+
+    void FixedUpdate()
+    {
+        if (isAttacking && cooldown<=0)
+        {
+            Debug.Log("Swinging");
+            gameObject.GetComponent<BoxCollider2D>().size = new Vector2(colSize.x + knockback, colSize.y + knockback);
+            //isAttacking = false;
+            Debug.Log(gameObject.GetComponent<BoxCollider2D>().size);
+            cooldown = swingTime;
+        }
+        else
+        {
+            if (colSize.x != gameObject.GetComponent<BoxCollider2D>().size.x)
+            {
+                gameObject.GetComponent<BoxCollider2D>().size = new Vector2(colSize.x, colSize.y);
+                Debug.Log(gameObject.GetComponent<BoxCollider2D>().size);
+            }
+            if (cooldown >= 0)
+                cooldown -= Time.fixedDeltaTime;
+        }
+    }
+
 }
