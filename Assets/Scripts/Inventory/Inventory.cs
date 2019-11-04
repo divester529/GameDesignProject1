@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+<<<<<<< HEAD
     [SerializeField] EquipableItem currentWeapon;
     [SerializeField] int currentPotionIndex;
     [SerializeField] ConsumableItem currentPotion;
@@ -23,6 +24,11 @@ public class Inventory : MonoBehaviour
       }
       AddItem(startingItem);
     }
+=======
+    [SerializeField] List<Item> items;
+    [SerializeField] Transform itemsParent;
+    [SerializeField] ItemSlot[] itemSlots;
+>>>>>>> EnemiesSpawnInRooms
 
     private void OnValidate() {
       if (itemsParent != null) {
@@ -41,6 +47,7 @@ public class Inventory : MonoBehaviour
       }
     }
 
+<<<<<<< HEAD
     public void AddItem(EquipableItem item) {
         if (items[0] != null)
         {
@@ -110,5 +117,26 @@ public class Inventory : MonoBehaviour
       if (Input.GetKeyDown("2")) {
         UsePotion();
       }
+=======
+    public bool AddItem(Item item) {
+      if (IsFull()) {
+        return false;
+      }
+
+      items.Add(item);
+      RefreshUI();
+      return true;
+    }
+
+    public bool RemoveItem(Item item) {
+      if (items.Remove(item)) {
+        return true;
+      }
+      return false;
+    }
+
+    public bool IsFull() {
+      return items.Count >= itemSlots.Length;
+>>>>>>> EnemiesSpawnInRooms
     }
 }

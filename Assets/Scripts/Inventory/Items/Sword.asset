@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2645579729505546994ea451171aa1d, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   ItemName: Sword
   Icon: {fileID: 21300000, guid: aa4b064f4157aa2409950a02230532c7, type: 3}
   StrengthBonus: 10
@@ -19,6 +20,9 @@ MonoBehaviour:
   position: 0
   ItemName:
   Icon: {fileID: 21300000, guid: aa4b064f4157aa2409950a02230532c7, type: 3}
+=======
+  ItemName: 
+>>>>>>> EnemiesSpawnInRooms
   Icon: {fileID: 0}
   StrengthBonus: 0
   AgilityBonus: 0

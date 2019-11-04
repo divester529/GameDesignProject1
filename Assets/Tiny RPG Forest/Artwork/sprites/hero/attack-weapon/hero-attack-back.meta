@@ -1,8 +1,16 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 8632eacc8b2c44d4b9a5171831c4c1a4
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
+=======
+guid: 221b7520260c04eafb1bdd35235ca4da
+folderAsset: yes
+timeCreated: 1521576007
+licenseType: Store
+DefaultImporter:
+>>>>>>> EnemiesSpawnInRooms
   userData: 
   assetBundleName: 
   assetBundleVariant: 

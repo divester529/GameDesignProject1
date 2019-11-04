@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: aae965e09ae24964dab76c2089e54cc0
+=======
+guid: ffed433e735f44a99b90ef2bcb4119c7
+>>>>>>> EnemiesSpawnInRooms
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -10,6 +10,7 @@ private GameManager gameManager;
     public int health;
     public int maxHealth;
 
+<<<<<<< HEAD
     public int strength;
 
     // Combat stats
@@ -36,11 +37,35 @@ private GameManager gameManager;
         return maxHealth;
     }
 
+=======
+    // Combat stats
+    public int damage=10;
+    public float swingTime=1; // Time (in seconds) between each attack
+    public float knockback = 0.75f;
+
+    public bool isAttacking;
+    
+    public float cooldown; // Swing cooldown
+
+    public Vector2 colSize; // This is for some hacky ass code to make knockback
+
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+
+>>>>>>> EnemiesSpawnInRooms
     protected Player()
     {
         health=maxHealth=100;
     }
 
+<<<<<<< HEAD
     void onDeath()
     {
         gameOver.SetActive(true);
@@ -54,6 +79,8 @@ private GameManager gameManager;
         knockback = 0.75f;
     }
 
+=======
+>>>>>>> EnemiesSpawnInRooms
     void Start()
     {
         gameManager=GameManager.Instance;
@@ -63,7 +90,11 @@ private GameManager gameManager;
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> EnemiesSpawnInRooms
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isAttacking = true;
@@ -73,7 +104,11 @@ private GameManager gameManager;
         {
             isAttacking = false;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> EnemiesSpawnInRooms
     }
 
     void FixedUpdate()

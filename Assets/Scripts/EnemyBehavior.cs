@@ -47,6 +47,10 @@ public class EnemyBehavior : MonoBehaviour
     {
         isAlive = false;
         Destroy(gameObject);
+<<<<<<< HEAD
+=======
+        gameManager.enemiesAlive--;
+>>>>>>> EnemiesSpawnInRooms
     }
 
     // Check to see if the unit made contact with the player
