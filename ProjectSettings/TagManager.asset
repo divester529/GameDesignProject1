@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - doorTopClosed
+  - doorLeftClosed
+  - doorRightClosed
+  - doorBottomClosed
+  - doorTopOpen
+  - doorLeftOpen
+  - doorRightOpen
+  - doorBottomOpen
   layers:
   - Default
   - TransparentFX
