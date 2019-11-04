@@ -10,10 +10,12 @@ private GameManager gameManager;
     public int health;
     public int maxHealth;
 
+    public Inventory inventory;
+
     public int strength;
 
     // Combat stats
-    public int damage=10;
+    public int damage;
     public float swingTime=1; // Time (in seconds) between each attack
     public float knockback = 0.75f;
 
@@ -58,6 +60,7 @@ private GameManager gameManager;
     {
         gameManager=GameManager.Instance;
         colSize = new Vector2(gameObject.GetComponent<BoxCollider2D>().size.x, gameObject.GetComponent<BoxCollider2D>().size.y);
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -72,6 +75,9 @@ private GameManager gameManager;
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isAttacking = false;
+        }
+        if (health <= 0) {
+          onDeath();
         }
 
     }

@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour
         SpawnItem(currentWeapon.index);
       }
       currentWeapon = item;
-      player.GetComponent<Player>().strength += item.StrengthBonus;
+      player.GetComponent<Player>().damage += item.StrengthBonus;
       player.GetComponent<PlayerMovement>().movementSpeed += item.AgilityBonus;
       items.RemoveAt(0);
       items.Insert(0, item);
@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
     }
 
     public void RemoveItem(EquipableItem item) {
-      player.GetComponent<Player>().strength -= item.StrengthBonus;
+      player.GetComponent<Player>().damage -= item.StrengthBonus;
       player.GetComponent<PlayerMovement>().movementSpeed -= item.AgilityBonus;
       items.RemoveAt(0);
       items.Insert(0, null);
@@ -109,5 +109,11 @@ public class Inventory : MonoBehaviour
       if (Input.GetKeyDown("2")) {
         UsePotion();
       }
+    }
+
+    public void RandomSpawn() {
+      Debug.Log("Nice");
+      int rand = Random.Range(0, SpawnableItems.Count);
+      SpawnItem(rand);
     }
 }

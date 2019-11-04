@@ -9,7 +9,7 @@ public class EnemyBehavior : MonoBehaviour
 
     // These fields will be different for the different classes of enemies
     // Change them in the inspector
-    public float maxHealth=100;
+    public float maxHealth=20;
     public float currHealth=100;
 
     public int damage=10;
@@ -27,25 +27,28 @@ public class EnemyBehavior : MonoBehaviour
 
     private float attackTimer=0; // Time until next attack
 
+    public Inventory inventory;
+
     void Start()
     {
         gameManager = GameManager.Instance;
         transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
-
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
         Debug.Log(Time.fixedDeltaTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // Function to be called when curHealth = 0
     void onDeath()
     {
         isAlive = false;
+        inventory.RandomSpawn();
         Destroy(gameObject);
         gameManager.enemiesAlive--;
     }
@@ -58,7 +61,7 @@ public class EnemyBehavior : MonoBehaviour
         // If the other object is the player, we are now touching the player
         if(string.Equals(other.transform.name, "Player"))
         {
-            
+
             touchingPlayer = true;
         }
     }
@@ -72,7 +75,7 @@ public class EnemyBehavior : MonoBehaviour
             touchingPlayer = false;
         }
     }
-    
+
     // If the enemy is touching the player do damage to player every time attackTimer reaches 0
     void attackPlayer()
     {
@@ -90,10 +93,10 @@ public class EnemyBehavior : MonoBehaviour
             {
                 attackTimer -= Time.fixedDeltaTime;
             }
-          
+
         }
     }
-    
+
     void attackedByPlayer()
     {
         if (touchingPlayer)

@@ -248,10 +248,10 @@ public class MapGenerator : MonoBehaviour
         if (gameManager.clearedRooms[roomX / gameManager.roomSizeX, roomY / gameManager.roomSizeY] == 0)
            return;
         //select enemy type
-        int enemySelection = UnityEngine.Random.Range(0, 0);
+        int enemySelection = UnityEngine.Random.Range(0, 2);
 
         //select random number of enemies to spawn
-        int numEnemies = UnityEngine.Random.Range(1, 2) + UnityEngine.Random.Range(0, gameManager.floorNumber);
+        int numEnemies = UnityEngine.Random.Range(1, 2) + UnityEngine.Random.Range(0, 2);
         gameManager.enemiesAlive = numEnemies;
         //instantiate them towards the center of the room
         for(int i = 0; i < numEnemies; i++)

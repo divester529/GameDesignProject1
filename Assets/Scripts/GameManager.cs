@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
     public int enemiesAlive = 0;
     public GameObject[] enemyTypes;
     public int[,] clearedRooms;
-    
+
 
     // Handle to the player
     private GameObject player;
@@ -51,14 +51,16 @@ public class GameManager : Singleton<GameManager>
             }
         }
         clearedRooms = new int[mapSizeX, mapSizeY];
-        enemyTypes = new GameObject[1];
+        enemyTypes = new GameObject[3];
         enemyTypes[0] = Resources.Load<GameObject>("Enemy");
+        enemyTypes[1] = Resources.Load<GameObject>("Slime");
+        enemyTypes[2] = Resources.Load<GameObject>("BigSlime");
 
         tileTypes = new TileType[10];
 
         //player = Resources.Load<GameObject>("player");
 
-        
+
         TileType tt1 = new TileType();
         TileType tt2 = new TileType();
         TileType tt3 = new TileType();
