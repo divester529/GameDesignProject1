@@ -6,4 +6,6 @@ using UnityEngine;
 public class ConsumableItem : Item
 {
   public int HealthBonus;
+  public float MovementBonus;
+  public int index;
 }

@@ -6,5 +6,6 @@ using UnityEngine;
 public class EquipableItem : Item
 {
   public int StrengthBonus;
-  public int AgilityBonus;
+  public float AgilityBonus;
+  public int index;
 }

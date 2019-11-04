@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbc3f8a0abd8d5f479767cce60632718, type: 3}
-  m_Name: New Consumable Item
+  m_Name: Health Potion
   m_EditorClassIdentifier: 
-  ItemName: 
-  Icon: {fileID: 0}
-  HealthBonus: 0
+  ItemName: HealthPotion
+  Icon: {fileID: -8485995304713028149, guid: cd5dd4487c4d9894bba0883ff4668786, type: 3}
+  HealthBonus: 10
+  MovementBonus: 1
+  index: 2

@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    [SerializeField] EquipableItem currentWeapon;
+    [SerializeField] int currentPotionIndex;
+    [SerializeField] ConsumableItem currentPotion;
     [SerializeField] List<Item> items;
     [SerializeField] Transform itemsParent;
     [SerializeField] ItemSlot[] itemSlots;
     [SerializeField] GameObject player;
+    [SerializeField] EquipableItem startingItem;
     [SerializeField] int maxItemsSize;
+
+    [SerializeField] List<GameObject> SpawnableItems;
 
     void Start() {
       int i = 0;
       for(; i < maxItemsSize; i++) {
         items.Add(null);
       }
+      AddItem(startingItem);
     }
 
     private void OnValidate() {
@@ -34,39 +41,73 @@ public class Inventory : MonoBehaviour
       }
     }
 
-    public bool AddItem(EquipableItem item) {
+    public void AddItem(EquipableItem item) {
       if (items[0] != null) {
-        return false;
+        RemoveItem(currentWeapon);
+        SpawnItem(currentWeapon.index);
       }
+      currentWeapon = item;
       player.GetComponent<Player>().strength += item.StrengthBonus;
+      player.GetComponent<PlayerMovement>().movementSpeed += item.AgilityBonus;
       items.RemoveAt(0);
       items.Insert(0, item);
       RefreshUI();
-      return true;
+      return;
     }
 
-    public bool AddItem(ConsumableItem item) {
+    public void RemoveItem(EquipableItem item) {
+      player.GetComponent<Player>().strength -= item.StrengthBonus;
+      player.GetComponent<PlayerMovement>().movementSpeed -= item.AgilityBonus;
+      items.RemoveAt(0);
+      items.Insert(0, null);
+      RefreshUI();
+      return;
+    }
+
+    public void AddItem(ConsumableItem item) {
       if (items[1] != null) {
-        return false;
+        RemoveItem(currentPotion);
+        SpawnItem(currentPotionIndex);
       }
-      player.GetComponent<Player>().health += item.HealthBonus;
+      currentPotionIndex = item.index;
+      currentPotion = item;
       items.RemoveAt(1);
       items.Insert(1, item);
       RefreshUI();
-      return true;
+      return;
     }
 
-    public bool RemoveItem(EquipableItem item) {
-      if (items.Remove(item)) {
-        player.GetComponent<Player>().strength -= item.StrengthBonus;
-        items.Remove(item);
-        RefreshUI();
-        return true;
+    public void RemoveItem(ConsumableItem item) {
+      items.RemoveAt(1);
+      items.Insert(1, null);
+      currentPotion = null;
+      RefreshUI();
+      return;
+    }
+
+    public void SpawnItem(int index) {
+      Vector3 spawnPosition = new Vector3(player.transform.position.x + 1.5f, player.transform.position.y, player.transform.position.z);
+      var temp = GameObject.Instantiate(SpawnableItems[index], spawnPosition, player.transform.rotation);
+      return;
+    }
+
+    public void ResetUI() {
+      items.RemoveAt(0);
+      items.Insert(0, startingItem);
+      items.RemoveAt(1);
+      items.Insert(1, null);
+      RefreshUI();
+    }
+
+    void UsePotion() {
+      player.GetComponent<Player>().health += currentPotion.HealthBonus;
+      player.GetComponent<PlayerMovement>().movementSpeed *= currentPotion.MovementBonus;
+      RemoveItem(currentPotion);
+    }
+
+    void Update() {
+      if (Input.GetKeyDown("2")) {
+        UsePotion();
       }
-      return false;
-    }
-
-    public bool IsFull() {
-      return items.Count >= itemSlots.Length;
     }
 }
