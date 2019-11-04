@@ -26,7 +26,10 @@ public class Inventory : MonoBehaviour
     }
 
     public bool AddItem(Item item) {
+<<<<<<< HEAD
       Debug.Log("Help me");
+=======
+>>>>>>> b574683651de11d3b0df8ffa3b349009f08cc643
       if (IsFull()) {
         return false;
       }
