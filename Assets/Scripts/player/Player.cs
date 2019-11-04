@@ -94,6 +94,12 @@ private GameManager gameManager;
             if (cooldown >= 0)
                 cooldown -= Time.fixedDeltaTime;
         }
+
+        // When the player is dead game over
+        if(health<=0)
+        {
+            onDeath();
+        }
     }
 
 }
