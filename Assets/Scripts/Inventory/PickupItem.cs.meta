@@ -1,15 +1,11 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: ee6250ec18a93d346bd7922fd5778676
-=======
-guid: 3f5999535b52a0c44a5079e12e5f9817
->>>>>>> EnemiesSpawnInRooms
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:

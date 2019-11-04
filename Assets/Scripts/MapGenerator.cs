@@ -9,10 +9,7 @@ public class MapGenerator : MonoBehaviour
 {
     private GameManager gameManager;
     public GameObject player;
-<<<<<<< HEAD
-=======
 
->>>>>>> EnemiesSpawnInRooms
 
     private void Start()
     {
@@ -107,7 +104,7 @@ public class MapGenerator : MonoBehaviour
     public void GetRoomTiles(string name, int x, int y)
     {
         //if (name == "") return;
-        
+
         StreamReader reader = new StreamReader(File.OpenRead(@"Assets\Rooms\" + name + ".csv"));
         int count = 0;
         List<string> list = new List<string>();
@@ -134,7 +131,7 @@ public class MapGenerator : MonoBehaviour
             count++;
             list.Clear();
         }
-       
+
 
     }
 
@@ -198,7 +195,7 @@ public class MapGenerator : MonoBehaviour
             if (x == 0 || roomMap[x - 1, y] == 1) numNeighbors++;
             if (y == 0 || roomMap[x, y - 1] == 1) numNeighbors++;
 
-            
+
             if (numNeighbors < 2)
             {
                 roomMap[x, y] = 1;
@@ -208,14 +205,14 @@ public class MapGenerator : MonoBehaviour
 
         }
 
-        
+
         //at this point, we've filled the array with rooms. Now we want to figure out what types of rooms they are
         string roomName = "";
         bool firstRoom = true;
         //so, check which sides have connections for each room
         foreach (Vector2 coord in roomCoords)
         {
-            
+
             //have to check first to avoid index out of range exceptions
             //y+1 for top
             if (coord.y + gameManager.roomSizeY <= gameManager.mapSizeY)
@@ -233,7 +230,7 @@ public class MapGenerator : MonoBehaviour
             if (coord.y - gameManager.roomSizeY >= 0)
                 if (roomMap[(int)(coord.x) / gameManager.roomSizeX, (int)(coord.y - gameManager.roomSizeY) / gameManager.roomSizeY] == 1) roomName = roomName + "B";
 
-           
+
             //now we have the connections, so we set up rooms at these coordinates
             GetRoomTiles(roomName,(int)coord.x, (int)coord.y);
             if (!firstRoom)
@@ -244,12 +241,10 @@ public class MapGenerator : MonoBehaviour
         }
 
         player.GetComponent<Transform>().position = new Vector3(roomCoords[0].x+gameManager.roomSizeX/2, roomCoords[0].y+gameManager.roomSizeY/2, -1);
-<<<<<<< HEAD
-=======
     }
     public void SpawnEnemies(int roomX, int roomY)
     {
-        
+
         if (gameManager.clearedRooms[roomX / gameManager.roomSizeX, roomY / gameManager.roomSizeY] == 0)
            return;
         //select enemy type
@@ -266,7 +261,6 @@ public class MapGenerator : MonoBehaviour
 
             GameObject enemy = (GameObject)Instantiate(gameManager.enemyTypes[enemySelection], new Vector3(roomX + enemyX, roomY + enemyY, -1), Quaternion.identity);
         }
->>>>>>> EnemiesSpawnInRooms
     }
 
     public void GenerateMapVisual()
@@ -299,5 +293,5 @@ public class MapGenerator : MonoBehaviour
         Vector3 position = new Vector3(0, 0, -.75f);
         gameManager.player = Instantiate(gameManager.player, position, Quaternion.identity) as GameObject;
     }*/
-    
+
 }
