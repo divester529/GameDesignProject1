@@ -54,6 +54,7 @@ private GameManager gameManager;
         damage = 10;
         swingTime = 1; // Time (in seconds) between each attack
         knockback = 0.75f;
+        inventory.ResetUI();
     }
 
     void Start()

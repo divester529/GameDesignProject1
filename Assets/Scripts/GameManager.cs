@@ -16,7 +16,7 @@ public class GameManager : Singleton<GameManager>
     public Room[,] rooms;
     public int mapSizeX, mapSizeY;
     public List<Vector2> takenPositions = new List<Vector2>();
-    public int floorNumber = 1;
+    public int floorNumber = 10;
     public int enemiesAlive = 0;
     public GameObject[] enemyTypes;
     public int[,] clearedRooms;
@@ -123,5 +123,7 @@ public class GameManager : Singleton<GameManager>
         tt10.isWalkable = true;
         tileTypes[9] = tt10;
 
+
+        //public static void SetAspectRatio(AspectRatio aspectRatio, bool enable);
     }
 }

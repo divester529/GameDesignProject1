@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DoorMovement : MonoBehaviour
 {
@@ -21,10 +22,10 @@ public class DoorMovement : MonoBehaviour
 
         //if the player goes through the top door, increase their y
         if (this.tag == "doorTopOpen")
-            if ((int)playerTransform.position.x == (int)this.transform.position.x && (int)playerTransform.position.y == (int)this.transform.position.y)
+            if ((int)playerTransform.position.x == (int)this.transform.position.x && Math.Abs(playerTransform.position.y+0.2 - this.transform.position.y) < 0.2f)
             {
                 Debug.Log("Up");
-                playerTransform.position = new Vector3(playerTransform.position.x, (int)playerTransform.position.y + 3.0f, playerTransform.position.z);
+                playerTransform.position = new Vector3(playerTransform.position.x, (int)playerTransform.position.y + 3.5f, playerTransform.position.z);
             }
         //if the player goes through the left door, decrease their x
         if (this.tag == "doorLeftOpen")
@@ -42,10 +43,10 @@ public class DoorMovement : MonoBehaviour
             }
         //if the player goes through the bottom door, decrease their y
         if (this.tag == "doorBottomOpen")
-            if ((int)playerTransform.position.x == (int)this.transform.position.x && (int)playerTransform.position.y-1 == (int)this.transform.position.y)
+            if ((int)playerTransform.position.x == (int)this.transform.position.x && Math.Abs(playerTransform.position.y-1.2 - this.transform.position.y) < 0.2f)
             {
                 Debug.Log("Down");
-                playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y - 3.0f, playerTransform.position.z);
+                playerTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y - 3.5f, playerTransform.position.z);
             }
     }
 }

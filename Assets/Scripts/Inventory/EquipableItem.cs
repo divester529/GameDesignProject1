@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class For Weapon Item
 [CreateAssetMenu]
 public class EquipableItem : Item
 {

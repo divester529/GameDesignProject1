@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
+//Prototype for Random Generator
 public class RandomItemGenerator : MonoBehaviour {
   public GameObject[] items;
   public Transform spawnPos;

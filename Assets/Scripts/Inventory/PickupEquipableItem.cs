@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class to allow us to interact with weapons on the ground
 public class PickupEquipableItem : MonoBehaviour {
 
   [SerializeField] Inventory inventory;

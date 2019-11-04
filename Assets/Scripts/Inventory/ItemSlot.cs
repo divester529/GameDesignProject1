@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Class for UI Image Item Slots
 public class ItemSlot : MonoBehaviour
 {
 
@@ -23,17 +24,5 @@ public class ItemSlot : MonoBehaviour
 
     private void OnValidate() {
       image = GetComponent<Image>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class to interact with Consumable Items on Ground
 public class PickupConsumableItem : MonoBehaviour {
 
   [SerializeField] Inventory inventory;
