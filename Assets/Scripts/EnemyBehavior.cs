@@ -124,7 +124,7 @@ public class EnemyBehavior : MonoBehaviour
             else
                 attackPlayer();
 
-            if(currHealth==0)
+            if(currHealth<=0)
             {
                 onDeath();
             }

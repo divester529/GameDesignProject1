@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: HealthPotion
   Icon: {fileID: -8485995304713028149, guid: cd5dd4487c4d9894bba0883ff4668786, type: 3}
-  HealthBonus: 10
+  HealthBonus: 60
   MovementBonus: 1
   index: 2
